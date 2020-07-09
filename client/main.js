@@ -7,6 +7,7 @@ $(document).ready(function() {
 function authetication() {
     if(localStorage.token){
         $('#home-page').show()
+        $('#navbar').show()
         $('#login-form').hide()
         $('#register-form').hide()
         $('.message').empty();
@@ -15,6 +16,7 @@ function authetication() {
         $('#login-form').show()
         $('#home-page').hide()
         $('#register-form').hide()
+        $('#navbar').hide()
         $('.message').empty();
     }
 }
@@ -98,26 +100,27 @@ function register (){
 }
 
 function onSignIn(googleUser) {
-
-    let id_token = googleUser.getAuthResponse().id_token;
-
+    var id_token = googleUser.getAuthResponse().id_token;
+    // console.log(id_token)
     $.ajax({
-        url: `${baseUrl}/googlelogin`,
+        url: `${baseUrl}/google`,
         method: 'POST',
         data: {
             id_token
         }
     })
-        .done(data => {
-            localStorage.setItem('token', data.token)
-            authetication()
-        })
-        .fail(err => {
-            $('.message').append(`
-                <p class="alert alert-warning">${err.responseJSON.msg}</p>
-            `)
-        })
-}
+    .done(data =>{
+        localStorage.setItem('token', data.token)
+        authetication()
+    })
+    .fail(err => {
+        // console.log(err)
+        $('.message').empty();
+        $('.message').append(`
+                <p class="alert alert-warning">${err}</p>
+        `)
+    })
+  }
 
 function signOut() {
     let auth2 = gapi.auth2.getAuthInstance();
