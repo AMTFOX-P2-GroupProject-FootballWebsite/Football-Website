@@ -4,6 +4,6 @@ const authentication = require('../middleware/authentication')
 
 route.use(authentication)
 
-route.get('/',FootballController.list)
+route.get('/premierleague',FootballController.list)
 
 module.exports = route
