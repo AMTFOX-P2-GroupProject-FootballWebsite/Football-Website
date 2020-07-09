@@ -11,13 +11,15 @@ function authetication() {
         $('#login-form').hide()
         $('#register-form').hide()
         $('.message').empty();
-        fetchList()
+        
     } else {
         $('#login-form').show()
         $('#home-page').hide()
         $('#register-form').hide()
+        $('#news-page').hide()
         $('#navbar').hide()
         $('.message').empty();
+        
     }
 }
 
@@ -26,11 +28,19 @@ function registerBtn() {
     $('#register-form').show()
     $('#home-page').hide()
     $('#login-form').hide()
+    $('#news-page').hide()
+}
+
+function newsBtn() {
+    fetchNews()
+    console.log('tes')
+    $('#news-page').show()
 }
 
 
 function homeBtn (){
     $('#home-page').show()
+    $('#news-page').hide()
 }
 
 function logout() {
@@ -40,6 +50,7 @@ function logout() {
 }
 
 function login() {
+
     event.preventDefault()
     let email = $('#email-login').val()
     let password = $('#password-login').val()
@@ -65,6 +76,7 @@ function login() {
         .always(() => {
             email = $('#email-login').val()
             password = $('#password-login').val()
+            
         })
 }
 
@@ -127,4 +139,71 @@ function signOut() {
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
+    
+}
+
+function fetchNews() {
+    console.log('tes')
+    $.ajax({
+        method: 'get',
+        url: `${baseUrl}/news/premierleague`
+    })
+    .done(data => {
+        $('.card-deck').empty()
+        let selectedNews = []
+        for (let i = 0; i < 20; i++) {
+            selectedNews.push(data.data.articles[i])
+        } 
+        
+        selectedNews.forEach(news => {
+            $('.card-deck').append(`
+            <!-- News jumbotron -->
+            <div class="jumbotron text-center hoverable p-4">
+            
+              <!-- Grid row -->
+              <div class="row">
+            
+                <!-- Grid column -->
+                <div class="col-md-4 offset-md-1 mx-3 my-3">
+            
+                  <!-- Featured image -->
+                  <div class="view overlay">
+                    <img src="${news.urlToImage}" class="img-fluid" alt="Sample image for first version of blog listing">
+                    <a>
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+            
+                </div>
+                <!-- Grid column -->
+            
+                <!-- Grid column -->
+                <div class="col-md-7 text-md-left ml-3 mt-3">
+            
+                  <!-- Excerpt -->
+                  <a href="#!" class="green-text">
+                    <h6 class="h6 pb-1"><i class="fas fa-desktop pr-1"></i> Work</h6>
+                  </a>
+            
+                  <h4 class="h4 mb-4">${news.title}</h4>
+            
+                  <p class="font-weight-normal">${news.description}</p>
+                  <p class="font-weight-normal">by <a><strong>${news.source.name}</strong></a>, ${news.publishedAt.slice(0,10)}</p>
+            
+                  <button type="button" class="btn btn-outline-light">Read More</button>
+            
+                </div>
+                <!-- Grid column -->
+            
+              </div>
+              <!-- Grid row -->
+            
+            </div>
+            <!-- News jumbotron -->
+            `)
+        })
+    })
+    .fail(err => {
+        console.log(err.responseJSON, `==========error============`)
+    })
 }
