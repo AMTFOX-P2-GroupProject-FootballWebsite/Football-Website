@@ -5,3 +5,19 @@ label,p {
 img{
     opacity: 0.8;
 }
+
+.jumbotron{
+    background-color: #21405e !important;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    color: darkgoldenrod;
+    
+}
+
+body {
+    background: rgb(34,189,179);
+background: radial-gradient(circle, rgba(34,189,179,1) 0%, rgba(163,221,193,1) 100%);
+    min-height: 100vh;
+    }
+    
