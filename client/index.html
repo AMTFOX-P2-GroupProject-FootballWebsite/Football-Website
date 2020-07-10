@@ -100,7 +100,7 @@
                     <a class="navbar-brand" onclick="homeBtn()">FOOTBALL WEBSITE</a>
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
-                            <a class="nav-link" onclick="addBtn()">Add Todo <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" onclick="dataBtn()">Data <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" onclick="newsBtn()">News</a>
@@ -131,14 +131,49 @@
 
     <!-- SECTION NEWS PAGE -->
     <section id="news-page">
-        
+
         <div class="card-deck">
-           
+
         </div>
         <!-- Card deck -->
     </section>
 
+
+
+
+    <!--SECTION DATA -->
+    <section id="football-data">
+        <div class="tablestanding">
+            <table class="table table-sm" style="width:50%">
+                <thead style="color: white; background-color: black;">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Club Name</th>
+                        <th scope="col">MP</th>
+                        <th scope="col">W</th>
+                        <th scope="col">D</th>
+                        <th scope="col">L</th>
+                        <th scope="col">GF</th>
+                        <th scope="col">GA</th>
+                        <th scope="col">GD</th>
+                        <th scope="col">Pts</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                </tbody>
+
+            </table>
+            <div class="loading">
+                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_knpXLX.json" background="transparent"
+                    speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+            </div>
+        </div>
+    </section>
+
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="./main.js"></script>
