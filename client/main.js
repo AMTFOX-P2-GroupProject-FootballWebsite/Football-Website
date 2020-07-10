@@ -1,48 +1,60 @@
 const baseUrl = 'http://localhost:3000'
 
-$(document).ready(function() {
+$(document).ready(function () {
     authetication()
 });
 
 function authetication() {
-    if(localStorage.token){
-        $('#home-page').show()
+    if (localStorage.token) {
+        $('#video-page').show()
         $('#navbar').show()
         $('#login-form').hide()
         $('#register-form').hide()
         $('.message').empty();
+        $('#football-data').hide()
         videoSlide()
         
     } else {
         $('#login-form').show()
-        $('#home-page').hide()
+        $('#video-page').hide()
         $('#register-form').hide()
         $('#news-page').hide()
         $('#navbar').hide()
-        $('#video-page').hide()
         $('.message').empty();
-        
+        $('#football-data').hide()
     }
 }
 
 function registerBtn() {
     $('.message').empty()
     $('#register-form').show()
-    $('#home-page').hide()
+    $('#video-page').hide()
     $('#login-form').hide()
     $('#news-page').hide()
+    $('#football-data').hide()
 }
 
 function newsBtn() {
     fetchNews()
-    console.log('tes')
+   // console.log('tes')
+   $('#video-page').hide()
     $('#news-page').show()
+    $('#football-data').hide()
+    
+}
+
+function dataBtn() { 
+    fetchStandings()
+    $('#news-page').hide()
+    $('#video-page').hide()
+    $('#football-data').show()
 }
 
 
-function homeBtn (){
-    $('#home-page').show()
+function homeBtn() {
+    $('#video-page').show()
     $('#news-page').hide()
+    $('#football-data').hide()
 }
 
 function logout() {
@@ -51,7 +63,7 @@ function logout() {
     signOut()
 }
 
-function login() {
+function login(event) {
 
     event.preventDefault()
     let email = $('#email-login').val()
@@ -78,11 +90,11 @@ function login() {
         .always(() => {
             email = $('#email-login').val()
             password = $('#password-login').val()
-            
+
         })
 }
 
-function register (){
+function register() {
     event.preventDefault();
     let name = $('#fullname').val()
     let email = $('#email-register').val()
@@ -123,25 +135,25 @@ function onSignIn(googleUser) {
             id_token
         }
     })
-    .done(data =>{
-        localStorage.setItem('token', data.token)
-        authetication()
-    })
-    .fail(err => {
-        // console.log(err)
-        $('.message').empty();
-        $('.message').append(`
+        .done(data => {
+            localStorage.setItem('token', data.token)
+            authetication()
+        })
+        .fail(err => {
+            // console.log(err)
+            $('.message').empty();
+            $('.message').append(`
                 <p class="alert alert-warning">${err}</p>
         `)
-    })
-  }
+        })
+}
 
 function signOut() {
     let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-      console.log('User signed out.');
+        console.log('User signed out.');
     });
-    
+
 }
 
 function fetchNews() {
@@ -150,15 +162,15 @@ function fetchNews() {
         method: 'get',
         url: `${baseUrl}/news/premierleague`
     })
-    .done(data => {
-        $('.card-deck').empty()
-        let selectedNews = []
-        for (let i = 0; i < 20; i++) {
-            selectedNews.push(data.data.articles[i])
-        } 
-        
-        selectedNews.forEach(news => {
-            $('.card-deck').append(`
+        .done(data => {
+            $('.card-deck').empty()
+            let selectedNews = []
+            for (let i = 0; i < 20; i++) {
+                selectedNews.push(data.data.articles[i])
+            }
+
+            selectedNews.forEach(news => {
+                $('.card-deck').append(`
             <!-- News jumbotron -->
             <div class="jumbotron text-center hoverable p-4">
             
@@ -190,7 +202,7 @@ function fetchNews() {
                   <h4 class="h4 mb-4">${news.title}</h4>
             
                   <p class="font-weight-normal">${news.description}</p>
-                  <p class="font-weight-normal">by <a><strong>${news.source.name}</strong></a>, ${news.publishedAt.slice(0,10)}</p>
+                  <p class="font-weight-normal">by <a><strong>${news.source.name}</strong></a>, ${news.publishedAt.slice(0, 10)}</p>
             
                   <button type="button" class="btn btn-outline-light">Read More</button>
             
@@ -203,14 +215,55 @@ function fetchNews() {
             </div>
             <!-- News jumbotron -->
             `)
+            })
         })
+        .fail(err => {
+            console.log(err.responseJSON, `==========error============`)
+        })
+}
+
+
+
+function fetchStandings() {
+    $('.loading').show()
+    $.ajax({
+        method: 'get',
+        url: `${baseUrl}/matchdata/standings`
     })
+        .done(data => {
+            $('.loadingdata').hide()
+            $('.tablestanding tbody').empty()
+            const table = data.data.data.table
+            
+            table.forEach(standing => {
+                $('.tablestanding tbody').append(`
+            <tr>
+            <th scope="row">${standing.rank}</th>
+            <td>${standing.name}</td>
+            <td>${standing.matches}</td>
+            <td>${standing.won}</td>
+            <td>${standing.drawn}</td>
+            <td>${standing.lost}</td>
+            <td>${standing.goals_scored}</td>
+            <td>${standing.goals_conceded}</td>
+            <td>${standing.goal_diff}</td>
+            <td>${standing.points}</td>
+            </tr>
+            `)
+            })
+        })
+        .fail(err => {
+            $('.loadingdata').hide()
+            console.log(err.responseJSON, `==========error============`)
+        })
+
     .fail(err => {
         console.log(err.responseJSON, `==========error============`)
     })
 }
 
 function videoSlide(){
+    console.log('masuk bro')
     $.ajax({
         method: 'GET',
         url: `${baseUrl}/football-video`
@@ -218,7 +271,7 @@ function videoSlide(){
     .done(data=>{
         $('.card-img').empty()
         // console.log(data)
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 3; i++) {
             $('.card-img').append(`
             <div class="col mb-4">
             <div class="card">
@@ -238,7 +291,5 @@ function videoSlide(){
     })
 }
 
-{/* <video width="320" height="240" controls>
-<source src="${data[i].url}" type="video/mp4">
-</video> */}
+
             
