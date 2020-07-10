@@ -271,7 +271,7 @@ function videoSlide(){
     .done(data=>{
         $('.card-img').empty()
         // console.log(data)
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 10; i++) {
             $('.card-img').append(`
             <div class="col mb-4">
             <div class="card">
