@@ -1,7 +1,7 @@
 const axios = require('axios')
+
 class FootballController{
     static showAll(req,res,next){
-        // https://www.scorebat.com/video-api/v1/
         axios({
             method: 'GET',
             url: 'https://www.scorebat.com/video-api/v1/'

@@ -34,7 +34,7 @@
     **Content:**
     ```json
       {
-        "msg": "email and password required for login"
+        "msg": "Data Not Found"
       }
     ```
     OR
@@ -97,7 +97,7 @@
 
 * **Success Response:**
   
-  **Code:** 200 OK <br />
+  **Code:** 201 Created <br />
   **Content:** 
     ```json
     {
@@ -175,9 +175,10 @@
     **Content:**
     ```json
       {
-        "msg": "token invalid!"
+        "msg": "token not found!"
       }
     ```
+    
   OR
 
   **Code:** 500 INTERNAL SERVER ERROR<br />
