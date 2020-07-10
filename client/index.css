@@ -1,0 +1,72 @@
+label,p {
+    font-weight: bolder;
+}
+
+img{
+    opacity: 0.8;
+}
+
+#login-form {
+    background: url(./assets/pic1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-container {
+    background-color: rgba(236, 240, 241,0.6);
+    padding: 40px;
+    border-radius: 10px;
+}
+
+#register-form {
+    background: url(./assets/pic1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#register-container {
+    background-color: rgba(236, 240, 241,0.6);
+    padding: 40px;
+    border-radius: 10px;
+    width: 500px;
+}
+
+.jumbotron{
+    background-color: rgba(255, 255, 255,0.6) !important;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    color: rgb(3, 0, 0);
+    
+}
+
+body {
+    background: rgb(34,189,179);
+    background: radial-gradient(circle, rgba(34,189,179,1) 0%, rgba(163,221,193,1) 100%);
+    min-height: 100vh;
+    min-width: 100vw;
+    overflow-x: hidden;
+}
+
+.loadingvideo{
+    margin-left: 370px;
+    margin-top: 50px;
+
+}
+
+.loadingdata{
+    margin-left: 610px;
+    margin-top: 50px;
+
+}
+    

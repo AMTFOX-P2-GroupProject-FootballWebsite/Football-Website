@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id"
+        content="660016295050-njg57hukigrioka9bj8h1i7dgdi6ifu1.apps.googleusercontent.com">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Football Website App</title>
+</head>
+
+<body>
+
+    <!-- SECTION LOGIN -->
+    <section id="login-form">
+                <div id="login-container">
+                    <h1 class="title-header text-center">Welcome on Football Website</h1>
+                    <div class="message"></div>
+                    <form onsubmit="login(event)" class="my-4">
+                        <div class="form-group">
+                            <input type="email" class="form-control w-75 pl-3 mx-auto border-0" name="email"
+                                id="email-login" placeholder="example@email.com" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control pl-3 w-75 mx-auto border-0" name="password"
+                                id="password-login" placeholder="password" />
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button id="btn-login" type="submit" class="btn btn-primary w-75 rounded-lg">Login</button>
+                        </div>
+                    </form>
+                    <p class="text-center">OR</p>
+                    <div class="d-flex justify-content-center">
+                        <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <p onclick="registerBtn()">Don't have account
+                            ? click here</p>
+                    </div>
+                </div>
+    </section>
+
+    <!-- SECTION REGISTER -->
+    <section id="register-form">
+                <div class="text-center" id="register-container">
+                    <h1 class="title-header text-center">JOIN US!</h1>
+                    <div class="message"></div>
+                    <form onsubmit="register(event)" class="my-4">
+                        <div class="form-group">
+                            <label for="fullname">Full Name</label>
+                            <input type="text" class="form-control w-75 mx-auto" name="name" id="fullname"
+                                placeholder="John Doe" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email-register">Email</label>
+                            <input type="email" class="form-control w-75 mx-auto" name="email" id="email-register"
+                                placeholder="example@email.com" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password-register">Password</label>
+                            <input type="password" class="form-control w-75 mx-auto" name="password"
+                                id="password-register" placeholder="password" />
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button id="btn-register" type="submit" class="btn btn-primary rounded-pill">Submit</button>
+                        </div>
+                    </form>
+                    <p class="text-center" style="cursor: pointer;" onclick="authetication()">Already have account ?</p>
+                </div>
+    </section>
+
+    <!-- SECTION HOME PAGE -->
+
+    <section id="navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-todo"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar-todo">
+                    <a class="navbar-brand" onclick="homeBtn()">FOOTBALL WEBSITE</a>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" onclick="dataBtn()">Data</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" onclick="newsBtn()">News</a>
+                        </li>
+                    </ul>
+                    <div class="my-2 mr-4 my-lg-0">
+                        <button class="btn btn-light my-2 my-sm-0"  onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+
+    <!-- SECTION NEWS PAGE -->
+    <section id="news-page" class="container">
+        <div class="card-deck">
+
+        </div>
+        <!-- Card deck -->
+    </section>
+
+
+
+
+    <!--SECTION DATA -->
+    <section id="football-data">
+        <div class="tablestanding my-5">
+            <table class="table table-sm mx-auto" style="width:50%">
+                <thead style="color: white; background-color: black;">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Club Name</th>
+                        <th scope="col">MP</th>
+                        <th scope="col">W</th>
+                        <th scope="col">D</th>
+                        <th scope="col">L</th>
+                        <th scope="col">GF</th>
+                        <th scope="col">GA</th>
+                        <th scope="col">GD</th>
+                        <th scope="col">Pts</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                </tbody>
+
+            </table>
+            <div class="loadingdata">
+                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_knpXLX.json" background="transparent"
+                    speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+            </div>
+
+        </section>
+
+
+    <section id="video-page" class="container my-5">
+        <div class="row row-cols-1 row-cols-md-2 card-img">
+            <div class="loadingvideo">
+                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_knpXLX.json" background="transparent"
+                    speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
