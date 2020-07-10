@@ -84,7 +84,7 @@ function login(event) {
         .fail(err => {
             $('.message').empty();
             $('.message').append(`
-                <p>${err.responseJSON.msg}</p>
+                <p class="alert alert-warning text-center">${err.responseJSON.errors}</p>
             `)
         })
         .always(() => {
@@ -94,7 +94,7 @@ function login(event) {
         })
 }
 
-function register() {
+function register(event) {
     event.preventDefault();
     let name = $('#fullname').val()
     let email = $('#email-register').val()
@@ -115,7 +115,7 @@ function register() {
         .fail(err => {
             $('.message').empty();
             $('.message').append(`
-                <p class="alert alert-warning">${err.responseJSON.msg}</p>
+                <p class="alert alert-warning text-center">${err.responseJSON.errors}</p>
             `)
         })
         .always(() => {
@@ -140,11 +140,10 @@ function onSignIn(googleUser) {
             authetication()
         })
         .fail(err => {
-            // console.log(err)
             $('.message').empty();
             $('.message').append(`
-                <p class="alert alert-warning">${err}</p>
-        `)
+                <p class="alert alert-warning text-center">${err.responseJSON.errors}</p>
+            `)
         })
 }
 
@@ -160,7 +159,10 @@ function fetchNews() {
     console.log('tes')
     $.ajax({
         method: 'get',
-        url: `${baseUrl}/news/premierleague`
+        url: `${baseUrl}/news/premierleague`,
+        headers: {
+            token: localStorage.token
+        }
     })
         .done(data => {
             $('.card-deck').empty()
@@ -204,7 +206,7 @@ function fetchNews() {
                   <p class="font-weight-normal">${news.description}</p>
                   <p class="font-weight-normal">by <a><strong>${news.source.name}</strong></a>, ${news.publishedAt.slice(0, 10)}</p>
             
-                  <button type="button" class="btn btn-outline-light">Read More</button>
+                  <a href="${news.url}" target="_blank"><button type="button" class="btn btn-primary">Read More</button></a>
             
                 </div>
                 <!-- Grid column -->
@@ -218,7 +220,10 @@ function fetchNews() {
             })
         })
         .fail(err => {
-            console.log(err.responseJSON, `==========error============`)
+            $('.message').empty();
+            $('.message').append(`
+                <p class="alert alert-warning text-center">${err.responseJSON.errors}</p>
+            `)
         })
 }
 
@@ -228,7 +233,10 @@ function fetchStandings() {
     $('.loading').show()
     $.ajax({
         method: 'get',
-        url: `${baseUrl}/matchdata/standings`
+        url: `${baseUrl}/matchdata/standings`,
+        headers: {
+            token: localStorage.token
+        }
     })
         .done(data => {
             $('.loadingdata').hide()
@@ -253,20 +261,21 @@ function fetchStandings() {
             })
         })
         .fail(err => {
-            $('.loadingdata').hide()
-            console.log(err.responseJSON, `==========error============`)
+            $('.message').empty();
+            $('.message').append(`
+                <p class="alert alert-warning text-center">${err.responseJSON.errors}</p>
+            `)
         })
-
-    .fail(err => {
-        console.log(err.responseJSON, `==========error============`)
-    })
 }
 
 function videoSlide(){
     console.log('masuk bro')
     $.ajax({
         method: 'GET',
-        url: `${baseUrl}/football-video`
+        url: `${baseUrl}/football-video`,
+        headers: {
+            token: localStorage.token
+        }
     })
     .done(data=>{
         $('.card-img').empty()
@@ -275,7 +284,7 @@ function videoSlide(){
             $('.card-img').append(`
             <div class="col mb-4">
             <div class="card">
-              <img src="${data[i].thumbnail}" class="card-img-top" alt="...">
+             ${data[i].videos[0].embed}
               <div class="card-body">
                 <h5 class="card-title">${data[i].title}</h5>
                 <p class="card-text">Last updated ${data[i].date.slice(0,10)}.</p>
@@ -286,8 +295,11 @@ function videoSlide(){
             `)
         }
     })
-    .fail(err=>{
-        console.log(err.responseJSON, `==========error============`)
+    .fail(err => {
+        $('.message').empty();
+        $('.message').append(`
+            <p class="alert alert-warning text-center">${err.responseJSON.errors}</p>
+        `)
     })
 }
 
