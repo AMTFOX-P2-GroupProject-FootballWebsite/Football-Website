@@ -11,6 +11,7 @@ function authetication() {
         $('#login-form').hide()
         $('#register-form').hide()
         $('.message').empty();
+        videoSlide()
         
     } else {
         $('#login-form').show()
@@ -18,6 +19,7 @@ function authetication() {
         $('#register-form').hide()
         $('#news-page').hide()
         $('#navbar').hide()
+        $('#video-page').hide()
         $('.message').empty();
         
     }
@@ -207,3 +209,36 @@ function fetchNews() {
         console.log(err.responseJSON, `==========error============`)
     })
 }
+
+function videoSlide(){
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/football-video`
+    })
+    .done(data=>{
+        $('.card-img').empty()
+        // console.log(data)
+        for (let i = 0; i < 10; i++) {
+            $('.card-img').append(`
+            <div class="col mb-4">
+            <div class="card">
+              <img src="${data[i].thumbnail}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">${data[i].title}</h5>
+                <p class="card-text">Last updated ${data[i].date.slice(0,10)}.</p>
+                <a href="${data[i].url}" class="btn btn-primary" target="_blank">Wasting your data</a>
+              </div>
+            </div>
+          </div>
+            `)
+        }
+    })
+    .fail(err=>{
+        console.log(err.responseJSON, `==========error============`)
+    })
+}
+
+{/* <video width="320" height="240" controls>
+<source src="${data[i].url}" type="video/mp4">
+</video> */}
+            
