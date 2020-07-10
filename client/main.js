@@ -6,15 +6,17 @@ $(document).ready(function () {
 
 function authetication() {
     if (localStorage.token) {
-        $('#home-page').show()
+        $('#video-page').show()
         $('#navbar').show()
         $('#login-form').hide()
         $('#register-form').hide()
         $('.message').empty();
-
+        $('#football-data').hide()
+        videoSlide()
+        
     } else {
         $('#login-form').show()
-        $('#home-page').hide()
+        $('#video-page').hide()
         $('#register-form').hide()
         $('#news-page').hide()
         $('#navbar').hide()
@@ -26,7 +28,7 @@ function authetication() {
 function registerBtn() {
     $('.message').empty()
     $('#register-form').show()
-    $('#home-page').hide()
+    $('#video-page').hide()
     $('#login-form').hide()
     $('#news-page').hide()
     $('#football-data').hide()
@@ -34,22 +36,23 @@ function registerBtn() {
 
 function newsBtn() {
     fetchNews()
-    
    // console.log('tes')
+   $('#video-page').hide()
     $('#news-page').show()
     $('#football-data').hide()
+    
 }
 
-function dataBtn() {
-    console.log('masukdatabtn')
+function dataBtn() { 
     fetchStandings()
     $('#news-page').hide()
+    $('#video-page').hide()
     $('#football-data').show()
 }
 
 
 function homeBtn() {
-    $('#home-page').show()
+    $('#video-page').show()
     $('#news-page').hide()
     $('#football-data').hide()
 }
@@ -60,7 +63,7 @@ function logout() {
     signOut()
 }
 
-function login() {
+function login(event) {
 
     event.preventDefault()
     let email = $('#email-login').val()
@@ -228,7 +231,7 @@ function fetchStandings() {
         url: `${baseUrl}/matchdata/standings`
     })
         .done(data => {
-            $('.loading').hide()
+            $('.loadingdata').hide()
             $('.tablestanding tbody').empty()
             const table = data.data.data.table
             
@@ -250,7 +253,43 @@ function fetchStandings() {
             })
         })
         .fail(err => {
-            $('.loading').hide()
+            $('.loadingdata').hide()
             console.log(err.responseJSON, `==========error============`)
         })
+
+    .fail(err => {
+        console.log(err.responseJSON, `==========error============`)
+    })
 }
+
+function videoSlide(){
+    console.log('masuk bro')
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/football-video`
+    })
+    .done(data=>{
+        $('.card-img').empty()
+        // console.log(data)
+        for (let i = 0; i < 3; i++) {
+            $('.card-img').append(`
+            <div class="col mb-4">
+            <div class="card">
+              <img src="${data[i].thumbnail}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">${data[i].title}</h5>
+                <p class="card-text">Last updated ${data[i].date.slice(0,10)}.</p>
+                <a href="${data[i].url}" class="btn btn-primary" target="_blank">Wasting your data</a>
+              </div>
+            </div>
+          </div>
+            `)
+        }
+    })
+    .fail(err=>{
+        console.log(err.responseJSON, `==========error============`)
+    })
+}
+
+
+            
